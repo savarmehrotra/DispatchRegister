@@ -3,7 +3,7 @@ from typing import Callable, Dict, Type, Any
 # A dictionary to store functions based on their argument types
 function_map: Dict[Type, Callable] = {}
 
-# For Custom Functions
+# Can be Used For A Generic Function Name - dispatch
 def dispatch(arg: Any) -> Any:
     # Get the type of the argument
     arg_type = type(arg)
@@ -19,7 +19,7 @@ def dispatch(arg: Any) -> Any:
         # If no function is registered for this type, raise an error
         raise TypeError(f"No function registered for argument of type {arg_type}")
 
-
+# For custom function names
 def register(param_type: Type) -> Callable:
     # Decorator to register a function for a specific type
     def decorator(func: Callable) -> Callable:
