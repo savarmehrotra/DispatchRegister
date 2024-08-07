@@ -18,12 +18,12 @@ def float_handler(x: float):
 
 class SampleClass(str): ...
 @register(SampleClass)
-def my_int_handler(x: SampleClass):
+def sample_class_handler(x: SampleClass):
     print(f"Should Print SampleClass: {x}")
 
 @register(int)
 def int_handler(x: int):
-    print(f"Handling int: {x}")
+    print(f"Should Print int: {x}")
 
 
 
@@ -32,12 +32,19 @@ if __name__ == '__main__':
     dispatch_wrapper(1.0)
     dispatch_wrapper(1)
 
-    #Examples for Implementation: #2 (Without Single Dispatcher)
-    dispatch(1.0)
-    dispatch(SampleClass("SampleClass"))
-    dispatch(1)
+    # Examples for Implementation: #2 (Without Single Dispatcher)
+    float_handler(1.0)
+    sample_class_handler(SampleClass("SampleClass"))
+    int_handler(1)
 
     try:
         dispatch([1, 2, 3])
     except TypeError as e:
         print(e)  # Expected output: No function registered for argument of type <class 'list'>
+
+    try:
+        @register(int)
+        def int_handler_duplicate(x: int):
+            print(f"Should Print int: {x}")
+    except Exception as e:
+        print(e)  # Expected output: Function Already Registered
